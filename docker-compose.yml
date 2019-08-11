@@ -16,7 +16,10 @@ services:
       - bootstrap.memory_lock=true
       # JVM Heap메모리 설정입니다. Xms/Xmx 옵션은 항상 같게 설정합니다.
       # 자세한 설명은 페이지 하단의 [Setting the heap size]을 참고하세요.
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m -XX:-UseConcMarkSweepGC
+                                              -XX:-UseCMSInitiatingOccupancyOnly
+                                              -XX:+UseG1GC
+                                              -XX:InitiatingHeapOccupancyPercent=75"
     # 리눅스 시스템 자원제한 관련 옵션입니다.
     # ES는 많은 파일디스크립터와 핸들러를 사용하기 때문에 제한 해제가 필요합니다.
     # 자세한 설명은 페이지 하단의 [File Descriptors]을 참고하세요.
@@ -44,7 +47,10 @@ services:
       - cluster.name=docker-cluster
       - node.name=data-node1
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m -XX:-UseConcMarkSweepGC
+                                              -XX:-UseCMSInitiatingOccupancyOnly
+                                              -XX:+UseG1GC
+                                              -XX:InitiatingHeapOccupancyPercent=75"
       # 다른 Cluster내 노드를 발견하기 위한 설정입니다.
       - "discovery.zen.ping.unicast.hosts=elasticsearch"
     ulimits:
